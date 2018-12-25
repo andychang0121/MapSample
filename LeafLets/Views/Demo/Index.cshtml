@@ -11,9 +11,11 @@
     <meta name="viewport" content="width=device-width" />
 
     <meta charset="UTF-8">
+    @Styles.Render("~/Content/css")
     <!-- JQUERY CDN -->
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @*<!-- BOOTSTRAP Latest compiled and minified CSS -->
         <link rel="stylesheet" href="~/Content/bootstrap.min.css">
 
@@ -46,6 +48,7 @@
             width: 100%;
             height: 500px;
         }
+        
     </style>
 </head>
 <body>
@@ -77,7 +80,7 @@
                 mapOption);
             tileLayer.addTo(mymap);
             //L.Control.geocoder().addTo(mymap);
-            
+
             L.control.custom({
                 position: 'topright',
                 content: '<div class="input-group">' +
@@ -91,8 +94,8 @@
                     position: 'absolute',
                     right: '0px',
                     top: '0px',
-                    width: '400px'
-                },
+                    'width': '300px'
+        },
                 events: {
                     click: function () { }
                 }
@@ -130,7 +133,7 @@
                 if (status === 'OK') {
                     console.log(results[0],"Google 搜尋地理資訊結果");
                     const resultLocation = results[0].geometry.location;
-                    let retuLatLng = [resultLocation.lat(), resultLocation.lng()];
+                    const retuLatLng = [resultLocation.lat(), resultLocation.lng()];
                     mymap.setView(retuLatLng, 16);
                     maker = L.marker(retuLatLng);
                     maker.addTo(mymap);
