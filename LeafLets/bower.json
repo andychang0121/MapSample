@@ -1,0 +1,24 @@
+{
+  "name": "leaflets",
+  "description": "Leaflets Demo",
+  "main": "index.js",
+  "authors": [
+    "Andy Chang"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "demo"
+  ],
+  "homepage": "https://github.com/andychang0121/MapSample",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "leaflet.locatecontrol": "^0.65.2"
+  }
+}
