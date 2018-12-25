@@ -201,6 +201,23 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="node_modules\leaflet-geosearch\assets\css\leaflet.css" />
+    <Content Include="node_modules\leaflet-geosearch\dist\bundle.js" />
+    <Content Include="node_modules\leaflet-geosearch\dist\bundle.min.js" />
+    <Content Include="node_modules\leaflet-geosearch\dist\style.css" />
+    <Content Include="node_modules\leaflet-geosearch\lib\constants.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\domUtils.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\index.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\leafletControl.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\providers\bingProvider.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\providers\esriProvider.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\providers\googleProvider.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\providers\index.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\providers\locationIQProvider.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\providers\openStreetMapProvider.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\providers\provider.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\resultList.js" />
+    <Content Include="node_modules\leaflet-geosearch\lib\searchElement.js" />
     <Content Include="node_modules\leaflet.browser.print\dist\leaflet.browser.print.js" />
     <Content Include="node_modules\leaflet.browser.print\dist\leaflet.browser.print.min.js" />
     <Content Include="node_modules\leaflet.browser.print\examples\data\us-states.js" />
@@ -339,6 +356,13 @@
     <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.mapbox.scss" />
     <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.scss" />
     <Content Include="bower_components\leaflet.locatecontrol\yarn.lock" />
+    <Content Include="node_modules\leaflet-geosearch\LICENSE" />
+    <Content Include="node_modules\leaflet-geosearch\package.json" />
+    <Content Include="node_modules\leaflet-geosearch\readme.md" />
+    <None Include="Properties\PublishProfiles\demomapsample - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\demomapsample - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\mapdemo - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\mapdemo - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -350,6 +374,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\plugins\demo.js" />
     <Content Include="Scripts\plugins\Leaflet.Control.Custom.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -389,6 +414,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\src\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

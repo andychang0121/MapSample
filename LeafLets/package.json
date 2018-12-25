@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "leaflet": "^1.3.4",
+    "leaflet-geosearch": "^2.7.0",
     "leaflet.browser.print": "^0.7.5"
   }
 }
