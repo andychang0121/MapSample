@@ -36,7 +36,9 @@
     <script src="~/Scripts/plugins/Leaflet.Control.Custom.js"></script>
     @*<script src='./Leaflet.Control.Custom.js'></script>*@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE"></script>
-
+    @*leaflet-locatecontrol*@
+    <link rel="stylesheet" href="~/bower_components/leaflet.locatecontrol/dist/L.Control.Locate.css"/>
+    <script src="~/bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
     <style>
         #mapid {
             width: 80%;
@@ -100,6 +102,11 @@
                     printModes: [L.control.browserPrint.mode.landscape(),
                     L.control.browserPrint.mode.custom("請在畫面上選擇一個區域")
                     ]
+                }).addTo(mymap);
+                L.control.locate({
+                    strings: {
+                        title: "定位到現在位置"
+                    }
                 }).addTo(mymap);
             }, function () {
                 //handleLocationError(true, infoWindow, map.getCenter());

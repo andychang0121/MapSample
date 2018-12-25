@@ -181,6 +181,18 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bower_components\leaflet.locatecontrol\demo\index.html" />
+    <Content Include="bower_components\leaflet.locatecontrol\demo\script.js" />
+    <Content Include="bower_components\leaflet.locatecontrol\demo_mapbox\index.html" />
+    <Content Include="bower_components\leaflet.locatecontrol\demo_mapbox\script.js" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.css" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.css" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.min.css" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.css" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.js" />
+    <Content Include="bower_components\leaflet.locatecontrol\Gruntfile.js" />
+    <Content Include="bower_components\leaflet.locatecontrol\screenshot.png" />
+    <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -315,6 +327,18 @@
     <Content Include="node_modules\leaflet.browser.print\README.md" />
     <Content Include="package.json" />
     <Content Include="bower.json" />
+    <Content Include="bower_components\leaflet.locatecontrol\.bower.json" />
+    <Content Include="bower_components\leaflet.locatecontrol\bower.json" />
+    <Content Include="bower_components\leaflet.locatecontrol\CHANGELOG.md" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.min.css.map" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.css.map" />
+    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.js.map" />
+    <Content Include="bower_components\leaflet.locatecontrol\LICENSE" />
+    <Content Include="bower_components\leaflet.locatecontrol\package.json" />
+    <Content Include="bower_components\leaflet.locatecontrol\README.md" />
+    <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.mapbox.scss" />
+    <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.scss" />
+    <Content Include="bower_components\leaflet.locatecontrol\yarn.lock" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
