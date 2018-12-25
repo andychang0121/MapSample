@@ -7,11 +7,106 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <meta name="viewport" content="width=device-width" />
+
+    <meta charset="UTF-8">
+    <!-- JQUERY CDN -->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+    @*<!-- BOOTSTRAP Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+
+        <!-- BOOTSTRAP Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" >
+        </script>*@
+
+    <!-- FONT AWESOME CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
+    @*<link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin="" />*@
+    <link rel="stylesheet" href="~/node_modules/leaflet/dist/leaflet.css" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    @*<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>*@
+    <script src="~/node_modules/leaflet/dist/leaflet.js"></script>
+    @*<script src="./leaflet.browser.print.min.js"></script>*@
+    <script src="~/node_modules/leaflet.browser.print/dist/leaflet.browser.print.min.js"></script>
+    <script src="~/Scripts/plugins/Leaflet.Control.Custom.js"></script>
+    @*<script src='./Leaflet.Control.Custom.js'></script>*@
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE"></script>
+
+    <style>
+        #mapid {
+            width: 80%;
+            height: 500px;
+        }
+    </style>
 </head>
 <body>
-    <div> 
-    </div>
+    <div id="mapid"></div>
 </body>
+<script>
+    //const latlan = [25.044308271193106, 121.52936895061339];
+    getCurrentLocation();
+
+    function getCurrentLocation() {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+
+                const latlng = [position.coords.latitude, position.coords.longitude];
+                var mymap = L.map('mapid').setView(latlng, 16);
+                let mapOption = {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 20,
+                    id: 'mapbox.streets',
+                    accessToken: 'sk.eyJ1IjoiYW5keXRhMjQiLCJhIjoiY2pwa2lydGg0MDNvYzN4czg0dWppd3FkNiJ9.E6mIiiD1nsXf5XS_-3G5nA',
+                };
+
+                L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', mapOption).addTo(mymap);
+
+                L.control.custom({
+                    position: 'topright',
+                    content: '<div class="input-group">' +
+                        '    <input type="text" class="form-control input-sm" placeholder="輸入你要找的地址">' +
+                        '    <span class="input-group-btn">' +
+                        '        <button class="btn btn-default btn-sm" type="button" id="search">去找!</button>' +
+                        '    </span>' +
+                        '</div>',
+                    classes: '',
+                    style: {
+                        position: 'absolute',
+                        right: '0px',
+                        top: '0px',
+                        width: '400px',
+                    },
+                    events: {
+                        click: function () {
+                            const queryResult = this.querySelector('input');
+                            console.log('輸入的地址', queryResult.value);
+                        }
+                    }
+                })
+                    .addTo(mymap);
+                L.marker(latlng).addTo(mymap);
+
+                // plugin - print
+                L.control.browserPrint({
+                    title: 'Just print me!',
+                    documentTitle: 'Map printed using leaflet.browser.print plugin',
+                    closePopupsOnPrint: false,
+                    printModes: [L.control.browserPrint.mode.landscape(),
+                    L.control.browserPrint.mode.custom("請在畫面上選擇一個區域")
+                    ]
+                }).addTo(mymap);
+            }, function () {
+                //handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else { // Browser doesn't support Geolocation
+            //handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+</script>
 </html>
