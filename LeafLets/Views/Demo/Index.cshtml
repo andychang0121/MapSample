@@ -1,48 +1,36 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
-
 <html>
 <head>
-    <title>Index</title>
+    <title>Mapbox / Leaflet / Google Map GeoCoding</title>
     <meta name="viewport" content="width=device-width" />
-
     <meta charset="UTF-8">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">*@
+
 
     @*mapbox script&css*@
-    <script src='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />
 
     @*add leaflet css&script*@
-
-    
-    @Styles.Render("~/Content/leaflet")
+    <link href="~/node_modules/leaflet/dist/leaflet.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/leaflet")
-    
+
     @*add leaflet plugins*@
     <script src="~/node_modules/leaflet.browser.print/dist/leaflet.browser.print.min.js"></script>
     <script src="~/Scripts/plugins/Leaflet.Control.Custom.js"></script>
     @*Plugins leaflet-locatecontrol*@
-    <link rel="stylesheet" href="~/bower_components/leaflet.locatecontrol/dist/L.Control.Locate.css" />
-    <script src="~/bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <link href="~/node_modules/leaflet.locatecontrol/dist/L.Control.Locate.css" rel="stylesheet" />
+    <script src="~/node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+    <link href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" rel="stylesheet" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     @*add Google Map API*@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE"></script>
-
-
-    @*<script src="~/node_modules/leaflet-geosearch/dist/bundle.min.js"></script>*@
-    @*<script type="module" src="~/Scripts/plugins/demo.js"></script>*@
-
-
-    <style>
+    <style type="text/css">
         body {
             padding: 5px 0 0 0;
         }
@@ -65,15 +53,28 @@
                 geocodeAddress(queryResult.value);
             }
         });
-        
+
         function getMapObject(latlng) {
             const mapOption = {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 20,
+                zoom: 24,
                 id: 'mapbox.streets',
                 accessToken: 'sk.eyJ1IjoiYW5keXRhMjQiLCJhIjoiY2pwa2lydGg0MDNvYzN4czg0dWppd3FkNiJ9.E6mIiiD1nsXf5XS_-3G5nA',
+                foo: 'OpenStreetMap'
             };
+            const locateOptions = {
+                watch: true,
+                enableHighAccuracy: true
+            };
+            const zoomOptions = {
+                animate: false
+            };
+            const tileLayerOptions = {
+                foo: 'var',
+                detectRetina :true
+            }
             const tileLayerStr = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+            const openStreetMaptileLayerStr = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
             const getContent = function () {
                 const html = '<div class="input-group">' +
                     '            <input id="queryString" type="text" class="form-control input-sm" placeholder="輸入你要找的地址">' +
@@ -84,11 +85,15 @@
                     '         </div>';
                 return html;
             }
-            mymap = L.map('mapid').setView(latlng, 16);
-            tileLayer = L.tileLayer(tileLayerStr, mapOption);
-            tileLayer.addTo(mymap);
-            //L.Control.geocoder().addTo(mymap);
+            mymap = L.map('mapid');
             
+            //OpenStreetMap 
+            L.tileLayer(openStreetMaptileLayerStr, tileLayerOptions).addTo(mymap);
+            mymap.setView(latlng, 20, zoomOptions);
+            // MapBox
+            //tileLayer = L.tileLayer(tileLayerStr, mapOption);
+            //tileLayer.addTo(mymap);
+            //L.Control.geocoder().addTo(mymap);
             L.control.custom({
                 position: 'topright',
                 content: getContent(),
@@ -98,7 +103,7 @@
                     right: '0px',
                     top: '0px',
                     'width': '300px'
-        },
+                },
                 events: {
                     click: function () { }
                 }
@@ -123,7 +128,7 @@
             });
             locate.addTo(mymap);
         }
-        
+
         /*
          * geocode Services
          *
@@ -134,7 +139,7 @@
                 'address': queryValue
             }, function (results, status) {
                 if (status === 'OK') {
-                    console.log(results[0],"Google 搜尋地理資訊結果");
+                    console.log(results[0], "Google 搜尋地理資訊結果");
                     const resultLocation = results[0].geometry.location;
                     const retuLatLng = [resultLocation.lat(), resultLocation.lng()];
                     mymap.setView(retuLatLng, 16);
