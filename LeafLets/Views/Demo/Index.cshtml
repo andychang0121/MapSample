@@ -126,7 +126,21 @@
             // MapBox
             //tileLayer = L.tileLayer(tileLayerStr, mapOption);
             //tileLayer.addTo(mymap);
-            //L.Control.geocoder().addTo(mymap);
+            const googleGeoCoderOptions = {
+                serviceUrl: "https://maps.googleapis.com/maps/api/geocode/json"
+            }
+            const googleGeoCoder = new L.Control.Geocoder.Google("AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE", googleGeoCoderOptions);
+            
+            const nominatimOption = {
+                serviceUrl:"https://nominatim.openstreetmap.org/"	
+            }
+            const nominatimGeoCoder = new L.Control.Geocoder.Nominatim(nominatimOption);
+            const geocoderOption = {
+                collapsed: true,
+                placeholder: '這是外掛的 Geocodeing Nominatim',
+                geocoder: nominatimGeoCoder
+            }
+            L.Control.geocoder(geocoderOption).addTo(mymap);
             //let myFeatureGroup = L.featureGroup().addTo(mymap).on("click", makerClick);
             setMakerClick(latlng, mymap);
             
@@ -137,7 +151,7 @@
                 style: {
                     position: 'absolute',
                     right: '0px',
-                    top: '0px',
+                    top: '200px',
                     'width': '300px'
                 },
                 events: {
@@ -162,7 +176,9 @@
             });
             locate.addTo(mymap);
         }
+        function geocoder() {
 
+        }
         /*
          * geocode Services
          *
