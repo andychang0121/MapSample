@@ -11,7 +11,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
-
     @*mapbox script&css*@
     <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />
@@ -33,11 +32,13 @@
     <style type="text/css">
         body {
             padding: 5px 0 0 0;
+            height: 100%;
         }
 
         #mapid {
             width: 100%;
-            height: 500px;
+            height: 540px;
+            overflow: hidden;
         }
     </style>
 </head>
@@ -53,7 +54,27 @@
                 geocodeAddress(queryResult.value);
             }
         });
-
+        /*
+         * 取得 Popup 文字 
+         */
+        function getLatLngText(latlngList) {
+            if (latlngList !== undefined && latlngList!==null) {
+                if (latlngList.length<2) {
+                    return `<p>請給我完整經緯度資料</p>`;
+                }
+            } else {
+                return `<p>請給我經緯度資料</p>`;
+            }
+            const [lat, lng] = latlngList;
+            return `<p>經度：${lng}<br />緯度：${lat}</p>`;
+        };
+        /*
+         * 設定 Maker 與 Popup 文字
+         */
+        function setMakerClick(latlng, refMap) {
+            maker = L.marker(latlng).bindPopup(getLatLngText(latlng));
+            maker.addTo(refMap);
+        }
         function getMapObject(latlng) {
             const mapOption = {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -70,8 +91,8 @@
                 animate: false
             };
             const tileLayerOptions = {
-                foo: 'var',
-                detectRetina :true
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                detectRetina: true
             }
             const tileLayerStr = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
             const openStreetMaptileLayerStr = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -85,15 +106,30 @@
                     '         </div>';
                 return html;
             }
+            const setPopupText = function (refLatlng, refMap) {
+                if (refMap !== undefined) {
+                    const latlngList = [refLatlng.lat, refLatlng.lng];
+                    L.popup()
+                        .setLatLng(refLatlng)
+                        .setContent(getLatLngText(latlngList))
+                        .openOn(refMap);
+                }
+            }
             mymap = L.map('mapid');
             
             //OpenStreetMap 
             L.tileLayer(openStreetMaptileLayerStr, tileLayerOptions).addTo(mymap);
+            mymap.on('click', function (e) {
+                setPopupText(e.latlng,this);
+            });
             mymap.setView(latlng, 20, zoomOptions);
             // MapBox
             //tileLayer = L.tileLayer(tileLayerStr, mapOption);
             //tileLayer.addTo(mymap);
             //L.Control.geocoder().addTo(mymap);
+            //let myFeatureGroup = L.featureGroup().addTo(mymap).on("click", makerClick);
+            setMakerClick(latlng, mymap);
+            
             L.control.custom({
                 position: 'topright',
                 content: getContent(),
@@ -105,11 +141,9 @@
                     'width': '300px'
                 },
                 events: {
-                    click: function () { }
+                    click: function () { this.value = ''}
                 }
             }).addTo(mymap);
-            maker = L.marker(latlng);
-            maker.addTo(mymap);
             // plugin - print
             printer = L.control.browserPrint({
                 title: 'Just print me!',
@@ -140,16 +174,14 @@
             }, function (results, status) {
                 if (status === 'OK') {
                     console.log(results[0], "Google 搜尋地理資訊結果");
-                    const resultLocation = results[0].geometry.location;
-                    const retuLatLng = [resultLocation.lat(), resultLocation.lng()];
+                    const latlng = results[0].geometry.location;
+                    const retuLatLng = [latlng.lat(), latlng.lng()];
                     mymap.setView(retuLatLng, 16);
-                    maker = L.marker(retuLatLng);
-                    maker.addTo(mymap);
+                    setMakerClick(retuLatLng, mymap);
                 } else {
                     alert('Geocode was not successful for the following reason: ' + status);
                 }
             });
-
         }
     </script>
 </body>
