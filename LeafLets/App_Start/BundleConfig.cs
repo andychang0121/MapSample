@@ -31,6 +31,9 @@ namespace LeafLets
                       "~/Content/bootstrap.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/leaflet").Include(
+                "~/node_modules/leaflet/dist/leaflet.css"));
         }
     }
 }

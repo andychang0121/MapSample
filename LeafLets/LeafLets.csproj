@@ -181,18 +181,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bower_components\leaflet.locatecontrol\demo\index.html" />
-    <Content Include="bower_components\leaflet.locatecontrol\demo\script.js" />
-    <Content Include="bower_components\leaflet.locatecontrol\demo_mapbox\index.html" />
-    <Content Include="bower_components\leaflet.locatecontrol\demo_mapbox\script.js" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.css" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.css" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.min.css" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.css" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.js" />
-    <Content Include="bower_components\leaflet.locatecontrol\Gruntfile.js" />
-    <Content Include="bower_components\leaflet.locatecontrol\screenshot.png" />
-    <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -233,6 +221,12 @@
     <Content Include="node_modules\leaflet.browser.print\src\leaflet.browser.print.sizes.js" />
     <Content Include="node_modules\leaflet.browser.print\src\leaflet.browser.print.utils.js" />
     <Content Include="node_modules\leaflet.browser.print\webpack.config.js" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.css" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.css" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.min.css" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.min.css" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.min.js" />
+    <Content Include="node_modules\leaflet.locatecontrol\src\L.Control.Locate.js" />
     <Content Include="node_modules\leaflet\dist\images\layers-2x.png" />
     <Content Include="node_modules\leaflet\dist\images\layers.png" />
     <Content Include="node_modules\leaflet\dist\images\marker-icon-2x.png" />
@@ -347,18 +341,6 @@
     <Content Include="node_modules\leaflet.browser.print\README.md" />
     <Content Include="package.json" />
     <Content Include="bower.json" />
-    <Content Include="bower_components\leaflet.locatecontrol\.bower.json" />
-    <Content Include="bower_components\leaflet.locatecontrol\bower.json" />
-    <Content Include="bower_components\leaflet.locatecontrol\CHANGELOG.md" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.min.css.map" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.css.map" />
-    <Content Include="bower_components\leaflet.locatecontrol\dist\L.Control.Locate.min.js.map" />
-    <Content Include="bower_components\leaflet.locatecontrol\LICENSE" />
-    <Content Include="bower_components\leaflet.locatecontrol\package.json" />
-    <Content Include="bower_components\leaflet.locatecontrol\README.md" />
-    <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.mapbox.scss" />
-    <Content Include="bower_components\leaflet.locatecontrol\src\L.Control.Locate.scss" />
-    <Content Include="bower_components\leaflet.locatecontrol\yarn.lock" />
     <Content Include="node_modules\leaflet-geosearch\LICENSE" />
     <Content Include="node_modules\leaflet-geosearch\package.json" />
     <Content Include="node_modules\leaflet-geosearch\readme.md" />
@@ -367,6 +349,16 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="node_modules\leaflet.locatecontrol\CHANGELOG.md" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.mapbox.min.css.map" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.min.css.map" />
+    <Content Include="node_modules\leaflet.locatecontrol\dist\L.Control.Locate.min.js.map" />
+    <Content Include="node_modules\leaflet.locatecontrol\LICENSE" />
+    <Content Include="node_modules\leaflet.locatecontrol\package.json" />
+    <Content Include="node_modules\leaflet.locatecontrol\README.md" />
+    <Content Include="node_modules\leaflet.locatecontrol\src\L.Control.Locate.mapbox.scss" />
+    <Content Include="node_modules\leaflet.locatecontrol\src\L.Control.Locate.scss" />
+    <Content Include="node_modules\leaflet.locatecontrol\yarn.lock" />
     <None Include="Properties\PublishProfiles\mapdemo - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\mapdemo - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
@@ -420,6 +412,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bower_components\" />
     <Folder Include="Scripts\src\" />
   </ItemGroup>
   <ItemGroup>

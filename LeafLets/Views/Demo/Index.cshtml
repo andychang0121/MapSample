@@ -14,29 +14,39 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">*@
 
+    @*mapbox script&css*@
     <script src='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="~/node_modules/leaflet/dist/leaflet.css" />
-    <script src="~/node_modules/leaflet/dist/leaflet.js"></script>
-    @*<script src="~/node_modules/leaflet/dist/leaflet.js"></script>*@
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel="stylesheet" />
+
+    @*add leaflet css&script*@
+
+    
+    @Styles.Render("~/Content/leaflet")
+    @Scripts.Render("~/bundles/leaflet")
+    
+    @*add leaflet plugins*@
     <script src="~/node_modules/leaflet.browser.print/dist/leaflet.browser.print.min.js"></script>
     <script src="~/Scripts/plugins/Leaflet.Control.Custom.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE"></script>
     @*Plugins leaflet-locatecontrol*@
     <link rel="stylesheet" href="~/bower_components/leaflet.locatecontrol/dist/L.Control.Locate.css" />
     <script src="~/bower_components/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    @*add Google Map API*@
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE"></script>
+
 
     @*<script src="~/node_modules/leaflet-geosearch/dist/bundle.min.js"></script>*@
     @*<script type="module" src="~/Scripts/plugins/demo.js"></script>*@
 
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
     <style>
         body {
             padding: 5px 0 0 0;
         }
+
         #mapid {
             width: 100%;
             height: 500px;
