@@ -10,6 +10,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/appscripts")
 
     @*mapbox script&css*@
     @*<script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
@@ -85,7 +86,6 @@
             maker.addTo(refMap);
         }
         function getMapObject(latlng) {
-
             const locateOptions = {
                 watch: true,
                 enableHighAccuracy: true

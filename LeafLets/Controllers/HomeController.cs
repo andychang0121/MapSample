@@ -26,5 +26,9 @@ namespace LeafLets.Controllers
 
             return View();
         }
+        public ActionResult LearnTS()
+        {
+            return View();
+        }
     }
 }
