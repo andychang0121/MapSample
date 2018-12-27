@@ -45,7 +45,7 @@
 <body>
     <div id="mapid"></div>
     <script>
-        var mymap, tileLayer, maker, printer, locate;
+        var mymap, tileLayer, maker, printer, locater,geocoder,geoLocater;
         const initlatlng = [25.044308271193106, 121.52936895061339];
         getMapObject(initlatlng);
         document.getElementById("search").addEventListener("click", function () {
@@ -55,11 +55,11 @@
             }
         });
         /*
-         * 取得 Popup 文字 
+         * 取得 Popup 文字
          */
         function getLatLngText(latlngList) {
-            if (latlngList !== undefined && latlngList!==null) {
-                if (latlngList.length<2) {
+            if (latlngList !== undefined && latlngList !== null) {
+                if (latlngList.length < 2) {
                     return `<p>請給我完整經緯度資料</p>`;
                 }
             } else {
@@ -90,6 +90,8 @@
             const zoomOptions = {
                 animate: false
             };
+            // tileLayer
+            // mapbox,OSM
             const tileLayerOptions = {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
                 detectRetina: true
@@ -116,48 +118,63 @@
                 }
             }
             mymap = L.map('mapid');
-            
-            //OpenStreetMap 
-            L.tileLayer(openStreetMaptileLayerStr, tileLayerOptions).addTo(mymap);
+
+            //OpenStreetMap
+            tileLayer = L.tileLayer(openStreetMaptileLayerStr, tileLayerOptions);
+            tileLayer.addTo(mymap);
+
             mymap.on('click', function (e) {
-                setPopupText(e.latlng,this);
+                setPopupText(e.latlng, this);
             });
             mymap.setView(latlng, 20, zoomOptions);
             // MapBox
             //tileLayer = L.tileLayer(tileLayerStr, mapOption);
             //tileLayer.addTo(mymap);
+            /*
+             * Google Map Developer Guide
+             * https://developers.google.com/maps/documentation/geocoding/intro#geocoding
+             */
             const googleGeoCoderOptions = {
-                serviceUrl: "https://maps.googleapis.com/maps/api/geocode/json"
+                serviceUrl: "https://maps.googleapis.com/maps/api/geocode/json",
+                defaultMarkGeocode: false,
+                language: "zh-TW"
             }
             const googleGeoCoder = new L.Control.Geocoder.Google("AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE", googleGeoCoderOptions);
-            
+
             const nominatimOption = {
-                serviceUrl:"https://nominatim.openstreetmap.org/"	
+                serviceUrl: "https://nominatim.openstreetmap.org/",
+                defaultMarkGeocode: false
             }
             const nominatimGeoCoder = new L.Control.Geocoder.Nominatim(nominatimOption);
             const geocoderOption = {
+                position : 'bottomright',
                 collapsed: true,
-                placeholder: '這是外掛的 Geocodeing Nominatim',
+                placeholder: 'Free Nominatim',
                 geocoder: nominatimGeoCoder
             }
-            L.Control.geocoder(geocoderOption).addTo(mymap);
+            geocoder = L.Control.geocoder(geocoderOption)
+                .on('markgeocode', function (e) {
+                    const bbox = e.geocode.bbox;
+                    console.log(e);
+                });
+            geocoder.addTo(mymap);
             //let myFeatureGroup = L.featureGroup().addTo(mymap).on("click", makerClick);
             setMakerClick(latlng, mymap);
-            
-            L.control.custom({
+            locater = L.control.custom({
                 position: 'topright',
                 content: getContent(),
                 classes: '',
                 style: {
                     position: 'absolute',
                     right: '0px',
-                    top: '200px',
+                    top: '0px',
                     'width': '300px'
                 },
                 events: {
-                    click: function () { this.value = ''}
+                    click: function() { this.value = '' }
                 }
-            }).addTo(mymap);
+            });
+            locater.addTo(mymap);
             // plugin - print
             printer = L.control.browserPrint({
                 title: 'Just print me!',
@@ -169,16 +186,14 @@
                 ]
             });
             printer.addTo(mymap);
-            locate = L.control.locate({
+            geoLocater = L.control.locate({
                 strings: {
                     title: "定位到現在位置"
                 }
             });
-            locate.addTo(mymap);
+            geoLocater.addTo(mymap);
         }
-        function geocoder() {
-
-        }
+        
         /*
          * geocode Services
          *
