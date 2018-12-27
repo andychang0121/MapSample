@@ -13,7 +13,7 @@
 
     @*mapbox script&css*@
     @*<script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />*@
+        <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />*@
 
     @*add leaflet css&script*@
     <link href="~/node_modules/leaflet/dist/leaflet.css" rel="stylesheet" />
@@ -30,10 +30,10 @@
 
     <link href="~/node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css" rel="stylesheet" />
     <script src="~/node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    
+
     @*add Google Map API*@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE"></script>
-    <style type="text/css">
+    <style>
         body {
             display: block;
             margin: 0px;
@@ -42,9 +42,11 @@
         }
 
         #mapid {
-            position: absolute;
+            padding: 0px;
+            margin: 0px;
+            position: absolute !important;
             width: 100%;
-            height: 100%;
+            height: 90%;
             overflow: hidden;
         }
     </style>
@@ -52,7 +54,7 @@
 <body>
     <div id="mapid"></div>
     <script>
-        var mymap, tileLayer, maker, printer, locater,geocoder,geoLocater;
+        var mymap, tileLayer, maker, printer, locater, geocoder, geoLocater;
         const initlatlng = [25.044308271193106, 121.52936895061339];
         getMapObject(initlatlng);
         document.getElementById("search").addEventListener("click", function () {
@@ -83,28 +85,34 @@
             maker.addTo(refMap);
         }
         function getMapObject(latlng) {
-            const mapOption = {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                zoom: 24,
-                id: 'mapbox.streets',
-                accessToken: 'sk.eyJ1IjoiYW5keXRhMjQiLCJhIjoiY2pwa2lydGg0MDNvYzN4czg0dWppd3FkNiJ9.E6mIiiD1nsXf5XS_-3G5nA',
-                foo: 'OpenStreetMap'
-            };
+
             const locateOptions = {
                 watch: true,
                 enableHighAccuracy: true
             };
             const zoomOptions = {
-                animate: false
+                animate: true
             };
             // tileLayer
             // mapbox,OSM
-            const tileLayerOptions = {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+            
+            const mapboxStr = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
+            const mapboxOption = {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                id: 'mapbox.streets',
+                accessToken: 'sk.eyJ1IjoiYW5keXRhMjQiLCJhIjoiY2pwa2lydGg0MDNvYzN4czg0dWppd3FkNiJ9.E6mIiiD1nsXf5XS_-3G5nA',
+                detectRetina: true
+            };
+            const locationIQStr = "https://{s}-tiles.locationiq.org/v2/obk/r/{z}/{x}/{y}.png?key={key}";
+            const locationIQOption = {
+                key: "53dbe00236f220",
+                detectRetina: true
+            };
+
+            const osmStr = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+            const osmOption = {
                 detectRetina: true
             }
-            const tileLayerStr = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
-            const openStreetMaptileLayerStr = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
             const getContent = function () {
                 const html = '<div class="input-group">' +
                     '            <input id="queryString" type="text" class="form-control input-sm" placeholder="輸入你要找的地址">' +
@@ -124,15 +132,26 @@
                         .openOn(refMap);
                 }
             }
-            mymap = L.map('mapid');
-
-            //OpenStreetMap
-            tileLayer = L.tileLayer(openStreetMaptileLayerStr, tileLayerOptions);
-            tileLayer.addTo(mymap);
-
-            mymap.on('click', function (e) {
-                setPopupText(e.latlng, this);
+            const mymapOption = {
+                scrollWheelZoom: true,
+                zoom:20
+            }
+            mymap = L.map('mapid', mymapOption);
+            mymap.on({
+                zoom: function() {
+                    console.log('zoom level:', this._zoom);
+                },
+                click: function(e) {
+                    setPopupText(e.latlng, this);
+                }
             });
+            
+            //OpenStreetMap
+            tileLayer = L.tileLayer(osmStr, osmOption);
+            //tileLayer = L.tileLayer(googleMapStr, googleMapOption);
+            tileLayer.addTo(mymap);
+            
+
             mymap.setView(latlng, 20, zoomOptions);
             // MapBox
             //tileLayer = L.tileLayer(tileLayerStr, mapOption);
@@ -154,16 +173,17 @@
             }
             const nominatimGeoCoder = new L.Control.Geocoder.Nominatim(nominatimOption);
             const geocoderOption = {
-                position : 'bottomright',
+                position: 'bottomright',
                 collapsed: true,
-                placeholder: 'Free Nominatim',
-                errorMessage : "搜尋不到",
+                placeholder: '免費的 Nominatim',
+                errorMessage: "搜尋不到",
+                showResultIcons: true,
                 geocoder: nominatimGeoCoder
             }
             geocoder = L.Control.geocoder(geocoderOption)
                 .on('markgeocode', function (e) {
                     const bbox = e.geocode.bbox;
-                    console.log(e);
+                    console.log(e.geocode);
                 });
             geocoder.addTo(mymap);
             //let myFeatureGroup = L.featureGroup().addTo(mymap).on("click", makerClick);
@@ -179,7 +199,7 @@
                     'width': '300px'
                 },
                 events: {
-                    click: function() { this.value = '' }
+                    click: function () { this.value = '' }
                 }
             });
             locater.addTo(mymap);
@@ -201,7 +221,7 @@
             });
             geoLocater.addTo(mymap);
         }
-        
+
         /*
          * geocode Services
          *
