@@ -33,7 +33,7 @@ namespace LeafLets
                       "~/Content/font-awesome.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/appscripts").Include(
-                "~/appScriptsJS/app.js"));
+                "~/appScriptsJS/*.js"));
 
         }
     }

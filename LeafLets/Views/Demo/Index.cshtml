@@ -86,6 +86,8 @@
             maker.addTo(refMap);
         }
         function getMapObject(latlng) {
+            const tc = new getTileLayers();
+            console.log(tc);
             const locateOptions = {
                 watch: true,
                 enableHighAccuracy: true
@@ -96,23 +98,7 @@
             // tileLayer
             // mapbox,OSM
             
-            const mapboxStr = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
-            const mapboxOption = {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                id: 'mapbox.streets',
-                accessToken: 'sk.eyJ1IjoiYW5keXRhMjQiLCJhIjoiY2pwa2lydGg0MDNvYzN4czg0dWppd3FkNiJ9.E6mIiiD1nsXf5XS_-3G5nA',
-                detectRetina: true
-            };
-            const locationIQStr = "https://{s}-tiles.locationiq.org/v2/obk/r/{z}/{x}/{y}.png?key={key}";
-            const locationIQOption = {
-                key: "53dbe00236f220",
-                detectRetina: true
-            };
-
-            const osmStr = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-            const osmOption = {
-                detectRetina: true
-            }
+            
             const getContent = function () {
                 const html = '<div class="input-group">' +
                     '            <input id="queryString" type="text" class="form-control input-sm" placeholder="輸入你要找的地址">' +
@@ -147,10 +133,9 @@
             });
             
             //OpenStreetMap
-            tileLayer = L.tileLayer(osmStr, osmOption);
+            tileLayer = L.tileLayer(tc.osmStr, tc.osmOption);
             //tileLayer = L.tileLayer(googleMapStr, googleMapOption);
             tileLayer.addTo(mymap);
-            
 
             mymap.setView(latlng, 20, zoomOptions);
             // MapBox
@@ -165,6 +150,7 @@
                 defaultMarkGeocode: false,
                 language: "zh-TW"
             }
+            
             const googleGeoCoder = new L.Control.Geocoder.Google("AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE", googleGeoCoderOptions);
 
             const nominatimOption = {
@@ -186,6 +172,9 @@
                     console.log(e.geocode);
                 });
             geocoder.addTo(mymap);
+
+
+
             //let myFeatureGroup = L.featureGroup().addTo(mymap).on("click", makerClick);
             setMakerClick(latlng, mymap);
             locater = L.control.custom({
