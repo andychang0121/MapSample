@@ -12,8 +12,8 @@
     @Scripts.Render("~/bundles/bootstrap")
 
     @*mapbox script&css*@
-    <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />
+    @*<script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />*@
 
     @*add leaflet css&script*@
     <link href="~/node_modules/leaflet/dist/leaflet.css" rel="stylesheet" />
@@ -23,21 +23,28 @@
     <script src="~/node_modules/leaflet.browser.print/dist/leaflet.browser.print.min.js"></script>
     <script src="~/Scripts/plugins/Leaflet.Control.Custom.js"></script>
     @*Plugins leaflet-locatecontrol*@
+
     <link href="~/node_modules/leaflet.locatecontrol/dist/L.Control.Locate.css" rel="stylesheet" />
     <script src="~/node_modules/leaflet.locatecontrol/dist/L.Control.Locate.min.js"></script>
-    <link href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" rel="stylesheet" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+
+    <link href="~/node_modules/leaflet-control-geocoder/dist/Control.Geocoder.css" rel="stylesheet" />
+    <script src="~/node_modules/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    
     @*add Google Map API*@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKZUGWLVGsk1mqeSugFZQbigzOgn_VMkE"></script>
     <style type="text/css">
         body {
+            display: block;
+            margin: 0px;
             padding: 5px 0 0 0;
             height: 100%;
         }
 
         #mapid {
+            position: absolute;
             width: 100%;
-            height: 540px;
+            height: 100%;
             overflow: hidden;
         }
     </style>
@@ -150,6 +157,7 @@
                 position : 'bottomright',
                 collapsed: true,
                 placeholder: 'Free Nominatim',
+                errorMessage : "搜尋不到",
                 geocoder: nominatimGeoCoder
             }
             geocoder = L.Control.geocoder(geocoderOption)
